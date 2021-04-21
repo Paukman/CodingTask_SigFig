@@ -3,7 +3,7 @@ import useCompany from "./useCompany";
 
 const MainPage = () => {
   const { getCompanies } = useCompany();
- 
+
   return <div>Main page</div>;
 };
 
