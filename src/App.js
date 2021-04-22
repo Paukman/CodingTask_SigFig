@@ -1,11 +1,14 @@
 import React from "react";
 import "./App.css";
 import MainPage from "./testCode/MainPage";
-
+import CompaniesProvider from "./testCode/CompaniesProvider/CompaniesProvider"
+;
 function App() {
   return (
     <div className="App">
-      <MainPage />
+      <CompaniesProvider>
+        <MainPage />
+      </CompaniesProvider>
     </div>
   );
 }
