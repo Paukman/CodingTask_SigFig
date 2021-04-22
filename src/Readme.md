@@ -39,25 +39,20 @@ Submit your testCode directory, and anything else you've built as a zip file bac
 ## Questions/troubleshooting setup issues
 Ping your recruiter and they'll help you get it working
 
+List of APIs:
+Companies
+GET /companies
+POST /companies
+GET /companies/{id}
+PUT /companies/{companyId}
+GET /importCompanies
+GET /companies/{companyId}/people
 
-{
-  "name": "Sigfig_FE_RPT",
-  "description": "Sigfig Front end programming test",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "express": "3.x",
-    "mongodb": "^3.6.4",
-    "node": "^15.7.0",
-    "swagger-jsdoc": "^1.3.0"
-  },
-  "devDependencies": {
-    "mongoose": "^4.8.4"
-  },
-  "scripts": {
-    "mongo": "mongod --dbpath data/db",
-    "server": "cd server && node server.js",
-    "start": "npm run mongo & sleep 3 & npm run server"
-  }
-}
+People
+GET /companies/{companyId}/people
+DELETE /person/{id}
+GET /person/{id}
+POST /person
+PUT /person/{personId}
+GET /importPeopleForCompany/{companyId}
 

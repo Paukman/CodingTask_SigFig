@@ -13,14 +13,21 @@ const CompaniesProvider = (props) => {
 
   const companies = useCompanies();
   console.log(companies);
-  useLoadData(companies.updateState);
+  useLoadData(companies.updateCompanies);
 
   return (
     <CompaniesContext.Provider
       value={{
-        companies: {
-          state: companies.state,
-        },
+        state: companies.state,
+        companies: companies.state.companies,
+        updateCompanies: companies.updateCompanies,
+        onShowEmployees: companies.onShowEmployees,
+        onShowCompany: companies.onShowCompany,
+        onUpdateCompany: companies.onUpdateCompany,
+        onUpdateEmployee: companies.onUpdateEmployee,
+        onCreateNewCompany: companies.onCreateNewCompany,
+        onCreateNewEmployee: companies.onCreateNewEmployee,
+        onDeleteEmployee: companies.onDeleteEmployee,
       }}
     >
       {children}

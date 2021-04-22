@@ -1,37 +1,42 @@
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardBody,
-  NavItem,
-  CardText,
-  NavLink,
-  Nav,
-} from "reactstrap";
+import React, { useContext } from "react";
+import { Card, Typography, Space, Row, Col } from "antd";
+import "antd/dist/antd.css";
+import Grid from "antd/lib/card/Grid";
+import { CompaniesContext } from "../CompaniesProvider";
+
+const { Link, Text } = Typography;
+const { Meta } = Card;
 
 const CompanyCard = ({ company }) => {
+  const { onShowEmployees, onShowCompany } = useContext(CompaniesContext);
+
   return (
-    <div style={{marginBottom: "10px",marginTop: "10px"}}>
-      <Card>
-        <CardHeader>{company.name}</CardHeader>
-        <CardBody>
-          <CardText style={{ fontWeight: "bold" }}>Address:</CardText>
-          <CardText>{company.address}</CardText>
-          <CardText style={{ fontWeight: "bold" }}>Revenue:</CardText>
-          <CardText>{company.revenue}</CardText>
-          <CardText style={{ fontWeight: "bold" }}>Phone:</CardText>
-          <CardText>{company.phone}</CardText>
-        </CardBody>
-        <CardFooter>
-          <Nav className="mr-auto">
-            <NavItem>
-              <NavLink href="#">Link</NavLink>
-            </NavItem>
-          </Nav>
-        </CardFooter>
-      </Card>
-    </div>
+    <>
+      <Grid style={{ maxWidth: "350px", marginBottom: "10px" }}>
+        <Col>
+          <Row style={{ backgroundColor: "lightgray" }}>
+            <Link onClick={() => onShowCompany(company._id)}>
+              {company.name}
+            </Link>
+          </Row>
+          <Row style={{ textAlign: "left" }}>
+            <Space direction="vertical">
+              <Text strong>Address:</Text>
+              <Text>{company.address}</Text>
+              <Text strong>Revenue:</Text>
+              <Text>{company.revenue}</Text>
+              <Text strong>Phone:</Text>
+              <Text>{company.phone}</Text>
+            </Space>
+          </Row>
+          <Row style={{ backgroundColor: "lightgray" }}>
+            <Link onClick={() => onShowEmployees(company._id)}>
+              People who work here
+            </Link>
+          </Row>
+        </Col>
+      </Grid>
+    </>
   );
 };
 
