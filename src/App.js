@@ -1,8 +1,12 @@
 import React from "react";
 import "./App.css";
-import MainPage from "./testCode/Company/MainPage";
+import AllCompaniesPage from "./testCode/Company/AllCompaniesPage";
+import SingleCompanyPage from "./testCode/Company/SingleCompanyPage";
+import AllEmployeesPage from "./testCode/Company/AllEmployeesPage";
 import CompaniesProvider from "./testCode/CompaniesProvider/CompaniesProvider";
+import MainPage from "./testCode/Company/MainPage";
 import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
+import SingleEmployeePage from "./testCode/Company/SingleEmployeePage";
 
 function App() {
   return (
@@ -10,15 +14,14 @@ function App() {
       <div className="App">
         <CompaniesProvider>
           <Switch>
-            <Route exact path="/">
-              <Redirect to="/companies/view" />
-            </Route>
-            <Route exact path="/companies">
-              <Redirect to="/companies/view" />
-            </Route>
-            <Route path="/companies">
-              <MainPage />
-            </Route>
+            <Route exact path="/" component={AllCompaniesPage} />
+            <Route exact path="/companies" component={AllCompaniesPage} />
+            <Route
+              path="/company/:id/employee/:employeeId?"
+              component={SingleEmployeePage}
+            />
+            <Route path="/company/:id/employees" component={AllEmployeesPage} />
+            <Route path="/company/:id" component={SingleCompanyPage} />
           </Switch>
         </CompaniesProvider>
       </div>

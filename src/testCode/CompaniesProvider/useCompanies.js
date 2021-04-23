@@ -2,15 +2,17 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../Api";
-import { COMPANY_PATH } from "../utils/constants";
-
-const COMPANIES_URL = "http://localhost:3001/companies";
+import { COMPANY_PATH, COMPANIES_URL } from "../utils/constants";
+import useIsMounted from "../utils/useIsMounted";
 
 const useCompanies = () => {
   const [state, setState] = useState({
     companies: [],
+    selectedCompany: "",
+    employees: [],
   });
   const history = useHistory();
+  const isMounted = useIsMounted();
 
   const updateCompanies = useCallback((data) => {
     console.log(data);
@@ -20,14 +22,18 @@ const useCompanies = () => {
     }));
   }, []);
 
-  const onShowEmployees = (id) => {
+  const onShowEmployees = async (id) => {
     console.log("GET /companies/{companyId}/people: ", id);
     history.push(`${COMPANY_PATH}/${id}/employees`);
     // switch to EmployeePage
   };
 
   const onShowCompany = (id) => {
-    //history.push(COMPANY_PATH);
+    // we have this data, just show CompanyPage
+    setState((prevState) => ({
+      ...prevState,
+      selectedCompany: id,
+    }));
     history.push(`${COMPANY_PATH}/${id}`);
     // we have this data, just show CompanyPage
     console.log("GET /companies/{id}: ", id);

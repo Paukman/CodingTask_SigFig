@@ -8,9 +8,6 @@ const AllCompaniesPage = () => {
 
   console.log("in AllCompaniesPage");
 
-  // console.log(companies);
-  // console.log(state.companies);
-
   return (
     <div>
       <Container>
@@ -28,8 +25,3 @@ const AllCompaniesPage = () => {
 
 export default AllCompaniesPage;
 
-/**{state.map((company) => (
-          <div key={company._id}>
-            {<CompanyCard company={company}></CompanyCard>}
-          </div>
-        ))} */
