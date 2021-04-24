@@ -1,23 +1,55 @@
 import React, { useContext } from "react";
-import { Card, Typography, Space, Row, Col } from "antd";
+import { Card, Typography, Space, Row, Col, Menu } from "antd";
+import {
+  AppstoreOutlined,
+  MailOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+
 import "antd/dist/antd.css";
 import Grid from "antd/lib/card/Grid";
 import { CompaniesContext } from "../CompaniesProvider";
 
 const { Link, Text } = Typography;
 const { Meta } = Card;
+const { SubMenu } = Menu;
+
+import {
+  LOAD_EMPLOYEES,
+  CREATE_COMPANY,
+  CREATE_EMPLOYEE,
+} from "../utils/constants";
 
 const CompanyCard = ({ company }) => {
-  const { onShowEmployees, onShowCompany } = useContext(CompaniesContext);
+  const { onShowEmployees, onShowCompany, onMenuClicked } = useContext(
+    CompaniesContext
+  );
+
+  const onClickMenuItem = (e) => {
+    onMenuClicked({ item: e.key, id: company._id });
+  };
 
   return (
     <>
-      <Grid style={{ maxWidth: "350px", marginBottom: "10px" }}>
+      <Grid style={{ width: "400px", marginBottom: "10px" }}>
         <Col>
           <Row style={{ backgroundColor: "lightgray" }}>
-            <Link onClick={() => onShowCompany(company._id)}>
-              {company.name}
-            </Link>
+            <Col>
+              <Link onClick={() => onShowCompany(company._id)}>
+                {company.name}
+              </Link>
+            </Col>
+            <Col>
+              <Menu onClick={(e) => onClickMenuItem(e)} mode="horizontal">
+                <SubMenu key="SubMenu" title="More ...">
+                  <Menu.Item key={CREATE_COMPANY}>Create new company</Menu.Item>
+                  <Menu.Item key={CREATE_EMPLOYEE}>Add new employee</Menu.Item>
+                  <Menu.Item key={LOAD_EMPLOYEES}>
+                    Reset employee list
+                  </Menu.Item>
+                </SubMenu>
+              </Menu>
+            </Col>
           </Row>
           <Row style={{ textAlign: "left" }}>
             <Space direction="vertical">

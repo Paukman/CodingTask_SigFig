@@ -1,30 +1,63 @@
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../Api";
-import { COMPANY_PATH, COMPANIES_URL } from "../utils/constants";
+import {
+  COMPANY_PATH,
+  COMPANIES_URL,
+  BASE_URL,
+  BASE_PATH,
+  LOAD_EMPLOYEES,
+  CREATE_COMPANY,
+  CREATE_EMPLOYEE,
+} from "../utils/constants";
 import useIsMounted from "../utils/useIsMounted";
+import CreateCompanyModal from "../Company/CreateCompanyModal";
 
 const useCompanies = () => {
   const [state, setState] = useState({
     companies: [],
     selectedCompany: "",
     employees: [],
+    selectedEmployee: "",
+    modalToRender: false,
   });
   const history = useHistory();
   const isMounted = useIsMounted();
 
   const updateCompanies = useCallback((data) => {
-    console.log(data);
+    /*const tempObject = {
+      companies: [
+        {
+          details: {},
+        },
+      ],
+    };
+
+    data.forEach((element) => {
+      tempObject.companies.push({ details: element });
+    });
+
+    console.log(tempObject); */
     setState((prevState) => ({
       ...prevState,
       companies: data,
     }));
+    console.log("data loaded");
   }, []);
 
+  const uploadTestData = async (id) => {
+    const url = `${BASE_URL}importPeopleForCompany/${id}`;
+    console.log(url);
+    const response = await api.get(url);
+    console.log(response.data);
+  };
+
   const onShowEmployees = async (id) => {
-    console.log("GET /companies/{companyId}/people: ", id);
+    const url = `${COMPANIES_URL}/${id}/people`;
+    console.log(url);
+    const response = await api.get(`${COMPANIES_URL}/${id}/people`);
     history.push(`${COMPANY_PATH}/${id}/employees`);
+    console.log(response.data);
     // switch to EmployeePage
   };
 
@@ -48,6 +81,21 @@ const useCompanies = () => {
   const backToCompanyPage = () => {};
   const backToMainPage = () => {};
 
+  const onMenuClicked = ({ item, id }) => {
+    console.log(item, id);
+    if (item === CREATE_COMPANY) {
+      setState((prevState) => ({
+        ...prevState,
+        modalToRender: true,
+      }));
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        modalToRender: false,
+      }));
+    }
+  };
+
   return {
     state,
     setState,
@@ -59,6 +107,8 @@ const useCompanies = () => {
     onCreateNewCompany,
     onCreateNewEmployee,
     onDeleteEmployee,
+    uploadTestData,
+    onMenuClicked,
   };
 };
 

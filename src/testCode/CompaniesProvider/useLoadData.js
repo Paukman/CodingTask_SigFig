@@ -9,23 +9,18 @@ const useLoadData = (updateState) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("fetching data");
         if (!isMounted()) {
-          console.log("returning...");
           return undefined;
         }
         const response = await api.get(COMPANIES_URL);
 
         if (!isMounted()) {
-          console.log("returning...");
           return undefined;
         }
 
-        console.log(response);
-        console.log(response.data);
         updateState(response.data);
+        
 
-        console.log("Getting companies");
       } catch (error) {
         console.log(error);
       }

@@ -12,7 +12,7 @@ const CompaniesProvider = (props) => {
   const { children } = props;
 
   const companies = useCompanies();
-  console.log(companies);
+
   useLoadData(companies.updateCompanies);
 
   return (
@@ -28,6 +28,8 @@ const CompaniesProvider = (props) => {
         onCreateNewCompany: companies.onCreateNewCompany,
         onCreateNewEmployee: companies.onCreateNewEmployee,
         onDeleteEmployee: companies.onDeleteEmployee,
+        uploadTestData: companies.uploadTestData,
+        onMenuClicked: companies.onMenuClicked,
       }}
     >
       {children}
