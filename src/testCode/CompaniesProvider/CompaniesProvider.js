@@ -31,6 +31,7 @@ const CompaniesProvider = (props) => {
         uploadTestEmployees: companies.uploadTestEmployees,
         onMenuClicked: companies.onMenuClicked,
         onCancelModal: companies.onCancelModal,
+        onShowSingleEmployee: companies.onShowSingleEmployee,
       }}
     >
       {children}

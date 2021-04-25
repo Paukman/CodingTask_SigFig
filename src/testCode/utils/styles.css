@@ -1,0 +1,56 @@
+.site-layout-content {
+    min-height: 280px;
+    padding: 24px;
+    background: #fff;
+}
+
+.logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background: lightblue;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sigfig {
+    margin-top: -16px;
+    font-size: large;
+    font-weight: 600;
+    color: #1890ff;
+
+}
+
+.ant-row-rtl .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+}
+
+.site-card-border-less-wrapper {
+    padding: 30px;
+    background: #ececec;
+}
+
+.ant-col .company-card {
+    border-width: 1px;
+    border-color: lightgray;
+    border-style: solid;
+    margin-bottom: 20px;
+}
+
+.top-card-row {
+    text-align: left;
+    line-height: 24px;
+    font-size: 16px;
+    background-color: lightblue;
+    border-bottom: none;
+    color: #1890ff;
+}
+
+.content-card {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 12px;
+    line-height: 12px;
+}

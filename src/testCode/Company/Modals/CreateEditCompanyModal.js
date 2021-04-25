@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
-import { CompaniesContext } from "../CompaniesProvider/CompaniesProvider";
+import { CompaniesContext } from "../../CompaniesProvider/CompaniesProvider";
 import { Modal, Input, Form, Button } from "antd";
 
 const CreateEditCompanyModal = () => {
-  console.log("in createCompanyModal");
   const {
     state,
     onCancelModal,

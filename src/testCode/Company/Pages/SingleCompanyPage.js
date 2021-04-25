@@ -1,18 +1,16 @@
 import React, { useContext } from "react";
-import { Container } from "reactstrap";
-import { CompaniesContext } from "../CompaniesProvider/CompaniesProvider";
-import CompanyCard from "./CompanyCard";
+import { Col } from "antd";
+import { CompaniesContext } from "../../CompaniesProvider/CompaniesProvider";
+import CompanyCard from "../Cards/CompanyCard";
 
 const SingleCompanyPage = () => {
   const { state } = useContext(CompaniesContext);
 
-  console.log("in SingleCompanyPage");
-
   return (
     <div>
-      <Container>
+      <Col span={12} offset={4}>
         <div>{<CompanyCard company={state.selectedCompany}></CompanyCard>}</div>
-      </Container>
+      </Col>
     </div>
   );
 };

@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
-import { CompaniesContext } from "../CompaniesProvider/CompaniesProvider";
+import { CompaniesContext } from "../../CompaniesProvider/CompaniesProvider";
 import { Modal, Input, Form, Button } from "antd";
 
 const CreateEditEmployeeModal = () => {
-  console.log("in createCompanyModal");
   const {
     state,
     onCancelModal,
@@ -13,7 +12,11 @@ const CreateEditEmployeeModal = () => {
 
   const onFinish = (values) => {
     if (state.employeeToUpdate) {
-      onUpdateEmployee(values, state.employeeToUpdate._id);
+      onUpdateEmployee(
+        values,
+        state.employeeToUpdate._id,
+        state.companyToUpdate._id
+      );
     } else {
       onCreateNewEmployee(values, state.companyToUpdate._id);
     }

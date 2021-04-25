@@ -1,20 +1,18 @@
 import { Button, Space } from "antd";
 import React, { useContext } from "react";
 import { Container } from "reactstrap";
-import { CompaniesContext } from "../CompaniesProvider/CompaniesProvider";
-import CompanyCard from "./CompanyCard";
-import CreateEditCompanyModal from "./CreateEditCompanyModal";
-import CreateEditEmployeeModal from "./CreateEditEmployeeModal";
+import { CompaniesContext } from "../../CompaniesProvider/CompaniesProvider";
+import CompanyCard from "../Cards/CompanyCard";
+import CreateEditCompanyModal from "../Modals/CreateEditCompanyModal";
+import CreateEditEmployeeModal from "../Modals/CreateEditEmployeeModal";
+import { Col } from "antd";
 
 const AllCompaniesPage = () => {
   const { state, createTestData } = useContext(CompaniesContext);
 
-  console.log("in AllCompaniesPage");
-  console.log(state);
-
   return (
     <div>
-      <Space direction="vertical">
+      <Col span={12} offset={4}>
         {state.companies.map((company) => (
           <div key={company._id}>
             {<CompanyCard company={company}></CompanyCard>}
@@ -26,7 +24,7 @@ const AllCompaniesPage = () => {
         <div>
           {state.employeeModalToRender ? <CreateEditEmployeeModal /> : null}
         </div>
-      </Space>
+      </Col>
     </div>
   );
 };
