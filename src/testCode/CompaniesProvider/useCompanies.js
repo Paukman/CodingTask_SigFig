@@ -55,7 +55,6 @@ const useCompanies = () => {
   const deleteEmployee = async (employeeId) => {
     try {
       const response = await api.delete(`${BASE_URL}/person/${employeeId}`);
-      console.log(response, employeeId);
     } catch (error) {
       Modal.error({
         centered: true,
@@ -67,7 +66,6 @@ const useCompanies = () => {
 
   const onDeleteEmployee = async (companyId, employeeId) => {
     try {
-      console.log("onDeleteEmployee", companyId, employeeId);
       await deleteEmployee(employeeId);
       // update employees
       const employees = await loadEmployees(companyId);
@@ -144,7 +142,6 @@ const useCompanies = () => {
   };
 
   const onUpdateCompany = async (values, companyId) => {
-    console.log(companyId);
     const body = {
       name: values.name,
       address: values.address,
@@ -156,10 +153,8 @@ const useCompanies = () => {
     try {
       await api.put(`${COMPANIES_URL}/${companyId}`, body);
       const updatedData = await loadCompanies(); // reload companies
-      console.log(updatedData);
       updateCompanies(updatedData, companyId);
     } catch (error) {
-      console.log(error);
       Modal.error({
         centered: true,
         title: "Error",
@@ -247,7 +242,6 @@ const useCompanies = () => {
   };
 
   const onMenuClicked = ({ item, id, employeeId }) => {
-    console.log(item, id);
     cleanState();
     switch (item) {
       case CREATE_COMPANY:

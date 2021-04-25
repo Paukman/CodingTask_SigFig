@@ -7,7 +7,6 @@ import CreateEditEmployeeModal from "../Modals/CreateEditEmployeeModal";
 
 const SingleCompanyPage = () => {
   const { state } = useContext(CompaniesContext);
-  console.log(state.selectedCompany);
   return (
     <div>
       <Col span={12} offset={4}>
