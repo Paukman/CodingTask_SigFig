@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { CompaniesContext } from "../../CompaniesProvider/CompaniesProvider";
 import { Modal, Input, Form, Button } from "antd";
 
@@ -18,6 +18,11 @@ const CreateEditCompanyModal = () => {
     }
   };
 
+  const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 },
+  };
+
   return (
     <>
       <Modal
@@ -29,6 +34,7 @@ const CreateEditCompanyModal = () => {
         maskClosable={false}
       >
         <Form
+          {...layout}
           name="companyModal"
           onFinish={onFinish}
           initialValues={{

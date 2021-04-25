@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Card, Typography, Space, Row, Col, Menu } from "antd";
+import { Typography, Space, Row, Col, Menu } from "antd";
 
 import "antd/dist/antd.css";
 import { CompaniesContext } from "../../CompaniesProvider";

@@ -20,7 +20,6 @@ const CompaniesProvider = (props) => {
       value={{
         state: companies.state,
         companies: companies.state.companies,
-        updateCompanies: companies.updateCompanies,
         onShowEmployees: companies.onShowEmployees,
         onShowCompany: companies.onShowCompany,
         onUpdateCompany: companies.onUpdateCompany,
@@ -32,6 +31,7 @@ const CompaniesProvider = (props) => {
         onMenuClicked: companies.onMenuClicked,
         onCancelModal: companies.onCancelModal,
         onShowSingleEmployee: companies.onShowSingleEmployee,
+        onChange: companies.onChange,
       }}
     >
       {children}

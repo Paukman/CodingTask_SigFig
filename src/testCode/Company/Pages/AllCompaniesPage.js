@@ -1,6 +1,4 @@
-import { Button, Space } from "antd";
 import React, { useContext } from "react";
-import { Container } from "reactstrap";
 import { CompaniesContext } from "../../CompaniesProvider/CompaniesProvider";
 import CompanyCard from "../Cards/CompanyCard";
 import CreateEditCompanyModal from "../Modals/CreateEditCompanyModal";
@@ -8,7 +6,7 @@ import CreateEditEmployeeModal from "../Modals/CreateEditEmployeeModal";
 import { Col } from "antd";
 
 const AllCompaniesPage = () => {
-  const { state, createTestData } = useContext(CompaniesContext);
+  const { state } = useContext(CompaniesContext);
 
   return (
     <div>

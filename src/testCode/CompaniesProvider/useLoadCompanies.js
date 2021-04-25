@@ -16,6 +16,7 @@ export const loadEmployees = async (companyId) => {
 export const loadCompanies = async () => {
   try {
     const response = await api.get(COMPANIES_URL);
+    console.log("data is loaded");
     return response.data;
   } catch (error) {
     return null;

@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import { useHistory } from "react-router-dom";
-
 import { BASE_PATH } from "../../utils/constants";
-
 import "../../utils/styles.css";
 
 const { Header, Content, Footer } = Layout;
@@ -15,7 +13,6 @@ const WithHeader = ({ children }) => {
   };
 
   const history = useHistory();
-
   const onClickMenuItem = (e) => {
     history.push(BASE_PATH);
   };

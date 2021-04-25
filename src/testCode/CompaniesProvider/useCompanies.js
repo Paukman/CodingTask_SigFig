@@ -6,7 +6,6 @@ import {
   COMPANY_PATH,
   COMPANIES_URL,
   BASE_URL,
-  BASE_PATH,
   LOAD_TEST_EMPLOYEES,
   CREATE_COMPANY,
   CREATE_EMPLOYEE,
@@ -15,7 +14,6 @@ import {
   LIST_EMPLOYEES,
   DELETE_EMPLOYEE,
 } from "../utils/constants";
-import useIsMounted from "../utils/useIsMounted";
 import { loadCompanies, loadEmployees } from "./useLoadCompanies";
 import { getCompanyById, getEmployeeById } from "../utils/utils";
 
@@ -31,7 +29,6 @@ const useCompanies = () => {
     employeeToUpdate: "",
   });
   const history = useHistory();
-  const isMounted = useIsMounted();
 
   // general method to update state value
   const onChange = ({ name, value }) => {
@@ -46,48 +43,84 @@ const useCompanies = () => {
     onChange({ name: "employees", value: employees });
   };
 
-  const updateCompanies = useCallback((data) => {
+  const updateCompanies = useCallback((data, companyId) => {
     data.sort((a, b) => (a.name > b.name ? 1 : -1)); // sort
     onChange({ name: "companies", value: data });
+    if (companyId) {
+      const selectedCompany = getCompanyById(companyId, data);
+      onChange({ name: "selectedCompany", value: selectedCompany });
+    }
   }, []);
 
   const deleteEmployee = async (employeeId) => {
-    const response = await api.delete(`${BASE_URL}/person/${employeeId}`);
+    try {
+      const response = await api.delete(`${BASE_URL}/person/${employeeId}`);
+      console.log(response, employeeId);
+    } catch (error) {
+      Modal.error({
+        centered: true,
+        title: "Error",
+        content: `Error deleting employee: ${error}`,
+      });
+    }
   };
 
   const onDeleteEmployee = async (companyId, employeeId) => {
-    deleteEmployee(employeeId);
-
-    // update employees
-    const employees = await loadEmployees(companyId);
-    updateEmployees(employees);
-
-    //go back to emplooyees page
-    history.push(`${COMPANY_PATH}/${companyId}/employees`);
+    try {
+      console.log("onDeleteEmployee", companyId, employeeId);
+      await deleteEmployee(employeeId);
+      // update employees
+      const employees = await loadEmployees(companyId);
+      updateEmployees(employees);
+      //go back to emplooyees page
+      history.push(`${COMPANY_PATH}/${companyId}/employees`);
+    } catch (error) {
+      Modal.error({
+        centered: true,
+        title: "Error",
+        content: `Error deleting employee: ${error}`,
+      });
+    }
   };
 
-  const uploadTestEmployees = async (id) => {
+  const uploadTestEmployees = async (companyId) => {
     // delete existig employees if any
-    const employees = await loadEmployees(id);
-    employees.forEach((employee) => {
-      deleteEmployee(employee._id);
-    });
-
-    const response = await api.get(`${BASE_URL}/importPeopleForCompany/${id}`);
-
-    // update employees
-    const testEmployees = await loadEmployees(id);
-    updateEmployees(testEmployees);
+    try {
+      const employees = await loadEmployees(companyId);
+      employees.forEach((employee) => {
+        deleteEmployee(employee._id);
+      });
+      const response = await api.get(
+        `${BASE_URL}/importPeopleForCompany/${companyId}`
+      );
+      // update employees
+      const testEmployees = await loadEmployees(companyId);
+      updateEmployees(testEmployees);
+    } catch (error) {
+      Modal.error({
+        centered: true,
+        title: "Error",
+        content: `Error uploading test employees: ${error}`,
+      });
+    }
   };
 
   const onShowEmployees = async (id) => {
-    const employees = await loadEmployees(id);
-    updateEmployees(employees);
-    onChange({
-      name: "selectedCompany",
-      value: getCompanyById(id, state.companies),
-    });
-    history.push(`${COMPANY_PATH}/${id}/employees`);
+    try {
+      const employees = await loadEmployees(id);
+      updateEmployees(employees);
+      onChange({
+        name: "selectedCompany",
+        value: getCompanyById(id, state.companies),
+      });
+      history.push(`${COMPANY_PATH}/${id}/employees`);
+    } catch (error) {
+      Modal.error({
+        centered: true,
+        title: "Error",
+        content: `Error loading employees: ${error}`,
+      });
+    }
   };
 
   const onShowSingleEmployee = async (id, companyId) => {
@@ -103,31 +136,30 @@ const useCompanies = () => {
   };
 
   const onShowCompany = (id) => {
-    // we have this data, just show CompanyPage
-    setState((prevState) => ({
-      ...prevState,
-      selectedCompany: getCompanyById(id, prevState.companies),
-    }));
+    onChange({
+      name: "selectedCompany",
+      value: getCompanyById(id, state.companies),
+    });
     history.push(`${COMPANY_PATH}/${id}`);
   };
 
-  const onUpdateCompany = async (values, id) => {
+  const onUpdateCompany = async (values, companyId) => {
+    console.log(companyId);
     const body = {
       name: values.name,
       address: values.address,
       revenue: values.revenue,
       phone: values.phone,
     };
-    setState((prevState) => ({
-      ...prevState,
-      companyModalToRender: false,
-    }));
+    onChange({ name: "companyModalToRender", value: false });
 
     try {
-      const response = await api.put(`${COMPANIES_URL}/${id}`, body);
-      const updatedData = await loadCompanies(); // reaload companies
-      updateCompanies(updatedData);
+      await api.put(`${COMPANIES_URL}/${companyId}`, body);
+      const updatedData = await loadCompanies(); // reload companies
+      console.log(updatedData);
+      updateCompanies(updatedData, companyId);
     } catch (error) {
+      console.log(error);
       Modal.error({
         centered: true,
         title: "Error",
@@ -143,13 +175,9 @@ const useCompanies = () => {
       revenue: values.revenue,
       phone: values.phone,
     };
-    setState((prevState) => ({
-      ...prevState,
-      companyModalToRender: false,
-    }));
-
+    onChange({ name: "companyModalToRender", value: false });
     try {
-      const response = await api.post(`${COMPANIES_URL}`, body);
+      await api.post(`${COMPANIES_URL}`, body);
       const updatedData = await loadCompanies(); // reaload companies
       updateCompanies(updatedData);
     } catch (error) {
@@ -172,7 +200,7 @@ const useCompanies = () => {
       employeeModalToRender: false,
     }));
     try {
-      const response = await api.put(`${BASE_URL}/person/${employeeId}`, body);
+      await api.put(`${BASE_URL}/person/${employeeId}`, body);
       // update employees
       const employees = await loadEmployees(companyId);
       updateEmployees(employees);
@@ -193,12 +221,9 @@ const useCompanies = () => {
       email: values.email,
       companyId: companyId,
     };
-    setState((prevState) => ({
-      ...prevState,
-      employeeModalToRender: false,
-    }));
+    onChange({ name: "employeeModalToRender", value: false });
     try {
-      const response = await api.post(`${BASE_URL}/person`, body);
+      await api.post(`${BASE_URL}/person`, body);
       // update employees
       const employees = await loadEmployees(companyId);
       updateEmployees(employees);
@@ -210,6 +235,7 @@ const useCompanies = () => {
       });
     }
   };
+
   const cleanState = () => {
     setState((prevState) => ({
       ...prevState,
@@ -221,6 +247,7 @@ const useCompanies = () => {
   };
 
   const onMenuClicked = ({ item, id, employeeId }) => {
+    console.log(item, id);
     cleanState();
     switch (item) {
       case CREATE_COMPANY:
@@ -279,7 +306,8 @@ const useCompanies = () => {
 
   return {
     state,
-    setState,
+    setState, // for testing
+    onChange,
     updateCompanies,
     onShowEmployees,
     onShowCompany,

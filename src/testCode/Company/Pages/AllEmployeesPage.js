@@ -1,26 +1,14 @@
 import React, { useContext } from "react";
-import { Card, Typography, Space, Row, Col, Menu } from "antd";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { Typography, Space, Row, Col, Menu } from "antd";
 
 import "antd/dist/antd.css";
-import Grid from "antd/lib/card/Grid";
 import { CompaniesContext } from "../../CompaniesProvider";
 import CreateEditEmployeeModal from "../Modals/CreateEditEmployeeModal";
 
-const { Link, Text } = Typography;
-const { Meta } = Card;
+const { Link } = Typography;
 const { SubMenu } = Menu;
 
-import {
-  LOAD_TEST_EMPLOYEES,
-  CREATE_COMPANY,
-  CREATE_EMPLOYEE,
-  UPDATE_COMPANY,
-} from "../../utils/constants";
+import { LOAD_TEST_EMPLOYEES, CREATE_EMPLOYEE } from "../../utils/constants";
 
 const AllEmployeePage = () => {
   const {
