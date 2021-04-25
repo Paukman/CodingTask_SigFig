@@ -19,7 +19,6 @@ class Api {
   }
 
   async request(config) {
-    await this.isAuthenticated();
     return axios.request(config);
   }
 
@@ -28,42 +27,34 @@ class Api {
   }
 
   async delete(url, config) {
-    await this.isAuthenticated();
     return axios.delete(url, config);
   }
 
   async deleteWithData(url, data, config) {
-    await this.isAuthenticated();
     return axios.delete(url, { ...config, data });
   }
 
   async head(url, config) {
-    await this.isAuthenticated();
     return axios.head(url, config);
   }
 
   async options(url, config) {
-    await this.isAuthenticated();
     return axios.options(url, config);
   }
 
   async post(url, data, config) {
-    await this.isAuthenticated();
     return axios.post(url, data, config);
   }
 
   async put(url, data, config) {
-    await this.isAuthenticated();
     return axios.put(url, data, config);
   }
 
   async patch(url, data, config) {
-    await this.isAuthenticated();
     return axios.patch(url, data, config);
   }
 
   async getUri(config) {
-    await this.isAuthenticated();
     return axios.getUri(config);
   }
 }

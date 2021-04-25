@@ -15,9 +15,10 @@ const { Meta } = Card;
 const { SubMenu } = Menu;
 
 import {
-  LOAD_EMPLOYEES,
+  LOAD_TEST_EMPLOYEES,
   CREATE_COMPANY,
   CREATE_EMPLOYEE,
+  UPDATE_COMPANY,
 } from "../utils/constants";
 
 const CompanyCard = ({ company }) => {
@@ -44,9 +45,10 @@ const CompanyCard = ({ company }) => {
                 <SubMenu key="SubMenu" title="More ...">
                   <Menu.Item key={CREATE_COMPANY}>Create new company</Menu.Item>
                   <Menu.Item key={CREATE_EMPLOYEE}>Add new employee</Menu.Item>
-                  <Menu.Item key={LOAD_EMPLOYEES}>
+                  <Menu.Item key={LOAD_TEST_EMPLOYEES}>
                     Reset employee list
                   </Menu.Item>
+                  <Menu.Item key={UPDATE_COMPANY}>Edit company</Menu.Item>
                 </SubMenu>
               </Menu>
             </Col>

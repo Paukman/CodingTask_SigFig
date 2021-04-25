@@ -6,16 +6,12 @@ import CompanyCard from "./CompanyCard";
 const SingleCompanyPage = () => {
   const { state } = useContext(CompaniesContext);
 
-  const company = state.companies.find(
-    (company) => company._id === state.selectedCompany
-  );
-
   console.log("in SingleCompanyPage");
 
   return (
     <div>
       <Container>
-        <div>{<CompanyCard company={company}></CompanyCard>}</div>
+        <div>{<CompanyCard company={state.selectedCompany}></CompanyCard>}</div>
       </Container>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import useCompanies from "./useCompanies";
-import useLoadData from "./useLoadData";
+import useLoadCompanies from "./useLoadCompanies";
 
 export const CompaniesContext = createContext();
 
@@ -13,7 +13,7 @@ const CompaniesProvider = (props) => {
 
   const companies = useCompanies();
 
-  useLoadData(companies.updateCompanies);
+  useLoadCompanies(companies.updateCompanies);
 
   return (
     <CompaniesContext.Provider
@@ -28,8 +28,9 @@ const CompaniesProvider = (props) => {
         onCreateNewCompany: companies.onCreateNewCompany,
         onCreateNewEmployee: companies.onCreateNewEmployee,
         onDeleteEmployee: companies.onDeleteEmployee,
-        uploadTestData: companies.uploadTestData,
+        uploadTestEmployees: companies.uploadTestEmployees,
         onMenuClicked: companies.onMenuClicked,
+        onCancelModal: companies.onCancelModal,
       }}
     >
       {children}

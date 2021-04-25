@@ -3,7 +3,8 @@ import React, { useContext } from "react";
 import { Container } from "reactstrap";
 import { CompaniesContext } from "../CompaniesProvider/CompaniesProvider";
 import CompanyCard from "./CompanyCard";
-import CreateCompanyModal from "./CreateCompanyModal";
+import CreateEditCompanyModal from "./CreateEditCompanyModal";
+import CreateEditEmployeeModal from "./CreateEditEmployeeModal";
 
 const AllCompaniesPage = () => {
   const { state, createTestData } = useContext(CompaniesContext);
@@ -19,7 +20,12 @@ const AllCompaniesPage = () => {
             {<CompanyCard company={company}></CompanyCard>}
           </div>
         ))}
-        <div>{state.modalToRender ? <CreateCompanyModal /> : null}</div>
+        <div>
+          {state.companyModalToRender ? <CreateEditCompanyModal /> : null}
+        </div>
+        <div>
+          {state.employeeModalToRender ? <CreateEditEmployeeModal /> : null}
+        </div>
       </Space>
     </div>
   );

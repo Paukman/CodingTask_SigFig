@@ -6,7 +6,7 @@ import AllEmployeesPage from "./testCode/Company/AllEmployeesPage";
 import CompaniesProvider from "./testCode/CompaniesProvider/CompaniesProvider";
 import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
 import SingleEmployeePage from "./testCode/Company/SingleEmployeePage";
-import CreateCompanyModal from "./testCode/Company/CreateCompanyModal";
+import CreateEditCompanyModal from "./testCode/Company/CreateEditCompanyModal";
 
 function App() {
   return (
