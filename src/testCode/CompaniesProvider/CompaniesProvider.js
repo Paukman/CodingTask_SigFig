@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import useCompanies from "./useCompanies";
-import useLoadCompanies from "./useLoadCompanies";
+import useLoadData from "./useLoadData";
 
 export const CompaniesContext = createContext();
 
@@ -13,7 +13,7 @@ const CompaniesProvider = (props) => {
 
   const companies = useCompanies();
 
-  useLoadCompanies(companies.updateCompanies);
+  useLoadData(companies.updateCompanies, companies.updateCompaniesAndEmployees);
 
   return (
     <CompaniesContext.Provider

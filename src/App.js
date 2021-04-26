@@ -57,6 +57,15 @@ function App() {
                 </WithHeader>
               )}
             />
+            <Route
+              exact
+              path="/pageNotFound"
+              component={() => (
+                <WithHeader>
+                  <div>Page not found</div>
+                </WithHeader>
+              )}
+            />
           </Switch>
         </CompaniesProvider>
       </div>

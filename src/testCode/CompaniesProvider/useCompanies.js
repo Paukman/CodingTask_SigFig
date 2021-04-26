@@ -14,7 +14,7 @@ import {
   LIST_EMPLOYEES,
   DELETE_EMPLOYEE,
 } from "../utils/constants";
-import { loadCompanies, loadEmployees } from "./useLoadCompanies";
+import { loadCompanies, loadEmployees } from "./useLoadData";
 import { getCompanyById, getEmployeeById } from "../utils/utils";
 
 const useCompanies = () => {
@@ -22,6 +22,7 @@ const useCompanies = () => {
     companies: [],
     selectedCompany: "",
     employees: [],
+    allEmployees: [],
     selectedEmployee: "",
     companyModalToRender: false,
     companyToUpdate: "",
@@ -42,6 +43,16 @@ const useCompanies = () => {
     employees.sort((a, b) => (a.name > b.name ? 1 : -1)); // sort
     onChange({ name: "employees", value: employees });
   };
+
+  const updateCompaniesAndEmployees = useCallback(
+    ({ companies, allEmployees }) => {
+      companies.sort((a, b) => (a.name > b.name ? 1 : -1)); // sort
+      onChange({ name: "companies", value: companies });
+      onChange({ name: "allEmployees", value: allEmployees });
+      console.log(companies, allEmployees);
+    },
+    []
+  );
 
   const updateCompanies = useCallback((data, companyId) => {
     data.sort((a, b) => (a.name > b.name ? 1 : -1)); // sort
@@ -314,6 +325,7 @@ const useCompanies = () => {
     onMenuClicked,
     onCancelModal,
     onShowSingleEmployee,
+    updateCompaniesAndEmployees,
   };
 };
 

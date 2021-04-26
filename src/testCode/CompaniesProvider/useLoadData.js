@@ -7,6 +7,7 @@ const COMPANIES_URL = "http://localhost:3001/companies";
 export const loadEmployees = async (companyId) => {
   try {
     const response = await api.get(`${COMPANIES_URL}/${companyId}/people`);
+
     return response.data;
   } catch (error) {
     return null;
@@ -23,7 +24,21 @@ export const loadCompanies = async () => {
   }
 };
 
-const useLoadCompanies = (updateState) => {
+export const loadData = async () => {
+  const companies = await loadCompanies();
+  let allEmployees = [{}];
+  // just grabb all employees, use map to get employees
+  companies.forEach(async (company) => {
+    const itemEmployees = await loadEmployees(company._id);
+    for (const obj of itemEmployees) {
+      allEmployees.push(obj);
+    }
+  });
+
+  return { companies, allEmployees };
+};
+
+const useLoadData = (updateState, updateCompaniesAndEmployees) => {
   const isMounted = useIsMounted();
   useEffect(() => {
     const fetchData = async () => {
@@ -32,18 +47,20 @@ const useLoadCompanies = (updateState) => {
           return undefined;
         }
         const data = await loadCompanies();
+        const { companies, allEmployees } = await loadData();
 
         if (!isMounted()) {
           return undefined;
         }
 
         updateState(data);
+        updateCompaniesAndEmployees({ companies, allEmployees });
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [isMounted, updateState]);
+  }, [isMounted, updateState, updateCompaniesAndEmployees]);
 };
 
-export default useLoadCompanies;
+export default useLoadData;
