@@ -50,11 +50,11 @@ const useCompanies = () => {
           ...prevState,
           selectedCompany: selectedCompany,
         }));
+      } else {
+        history.push("/pageNotFound");
       }
-      else
-      console.log("page not found");
     }
-  }, [match, state]);
+  }, [match, state, history]);
 
   // general method to update state value
   const onChange = ({ name, value }) => {
