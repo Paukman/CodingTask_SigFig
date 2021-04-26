@@ -47,14 +47,14 @@ const useLoadData = (updateState, updateCompaniesAndEmployees) => {
           return undefined;
         }
         const data = await loadCompanies();
-        const { companies, allEmployees } = await loadData();
+        // const { companies, allEmployees } = await loadData();
 
         if (!isMounted()) {
           return undefined;
         }
 
         updateState(data);
-        updateCompaniesAndEmployees({ companies, allEmployees });
+        // updateCompaniesAndEmployees({ companies, allEmployees });
       } catch (error) {
         console.log(error);
       }

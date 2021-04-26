@@ -45,7 +45,6 @@ const useCompanies = () => {
       state.companies.length &&
       !state.selectedCompany
     ) {
-      console.log(matchCompany.params.id);
       const selectedCompany = state.companies.find(
         (company) => company._id === matchCompany.params.id
       );
@@ -78,7 +77,6 @@ const useCompanies = () => {
       companies.sort((a, b) => (a.name > b.name ? 1 : -1)); // sort
       onChange({ name: "companies", value: companies });
       onChange({ name: "allEmployees", value: allEmployees });
-      console.log(companies, allEmployees);
     },
     []
   );
