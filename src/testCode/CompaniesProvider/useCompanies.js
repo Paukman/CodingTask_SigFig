@@ -31,19 +31,23 @@ const useCompanies = () => {
   });
   const history = useHistory();
 
-  const match = useRouteMatch(`${COMPANY_PATH}/:id`);
+  const matchCompany = useRouteMatch({
+    path: `${COMPANY_PATH}/:id`,
+    strict: true,
+  });
 
   useEffect(() => {
     if (
-      match?.params?.id &&
+      matchCompany?.params?.id &&
+      matchCompany?.isExact &&
       state &&
       state.companies &&
       state.companies.length &&
       !state.selectedCompany
     ) {
-      console.log(match.params.id);
+      console.log(matchCompany.params.id);
       const selectedCompany = state.companies.find(
-        (company) => company._id === match.params.id
+        (company) => company._id === matchCompany.params.id
       );
       if (selectedCompany) {
         setState((prevState) => ({
@@ -54,7 +58,7 @@ const useCompanies = () => {
         history.push("/pageNotFound");
       }
     }
-  }, [match, state, history]);
+  }, [matchCompany, state, history]);
 
   // general method to update state value
   const onChange = ({ name, value }) => {
