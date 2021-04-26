@@ -11,7 +11,7 @@ const SingleCompanyPage = () => {
   const { state } = useContext(CompaniesContext);
 
   const match = useRouteMatch(`${COMPANY_PATH}/:id`);
-  let company = state.selectedCompany;
+  let selectedCompany = state.selectedCompany;
   const history = useHistory();
 
   if (
@@ -21,14 +21,12 @@ const SingleCompanyPage = () => {
     state.companies.length &&
     !state.selectedCompany
   ) {
-    const selectedCompany = state.companies.find(
+    selectedCompany = state.companies.find(
       (company) => company._id === match.params.id
     );
     console.log(selectedCompany);
     console.log(state);
-    if (selectedCompany) {
-      company = selectedCompany;
-    }
+
     if (!selectedCompany) {
       history.push("/pageNotFound");
       return null;
@@ -36,17 +34,19 @@ const SingleCompanyPage = () => {
   }
 
   return (
-    <div>
-      <Col span={12} offset={4}>
-        <div>{<CompanyCard company={company}></CompanyCard>}</div>
-      </Col>
+    selectedCompany && (
       <div>
-        {state.companyModalToRender ? <CreateEditCompanyModal /> : null}
+        <Col span={12} offset={4}>
+          <div>{<CompanyCard company={selectedCompany}></CompanyCard>}</div>
+        </Col>
+        <div>
+          {state.companyModalToRender ? <CreateEditCompanyModal /> : null}
+        </div>
+        <div>
+          {state.employeeModalToRender ? <CreateEditEmployeeModal /> : null}
+        </div>
       </div>
-      <div>
-        {state.employeeModalToRender ? <CreateEditEmployeeModal /> : null}
-      </div>
-    </div>
+    )
   );
 };
 
