@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { Modal } from "antd";
 import api from "../utils/Api";
 import {
@@ -30,6 +30,31 @@ const useCompanies = () => {
     employeeToUpdate: "",
   });
   const history = useHistory();
+
+  const match = useRouteMatch(`${COMPANY_PATH}/:id`);
+
+  useEffect(() => {
+    if (
+      match?.params?.id &&
+      state &&
+      state.companies &&
+      state.companies.length &&
+      !state.selectedCompany
+    ) {
+      console.log(match.params.id);
+      const selectedCompany = state.companies.find(
+        (company) => company._id === match.params.id
+      );
+      if (selectedCompany) {
+        setState((prevState) => ({
+          ...prevState,
+          selectedCompany: selectedCompany,
+        }));
+      }
+      else
+      console.log("page not found");
+    }
+  }, [match, state]);
 
   // general method to update state value
   const onChange = ({ name, value }) => {
