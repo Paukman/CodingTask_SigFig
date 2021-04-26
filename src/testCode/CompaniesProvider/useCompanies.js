@@ -16,6 +16,11 @@ import {
 } from "../utils/constants";
 import { loadCompanies, loadEmployees } from "./useLoadData";
 import { getCompanyById, getEmployeeById } from "../utils/utils";
+import {
+  onCompanyPageRefresh,
+  onEmployeesPageRefresh,
+  onSingleEmployeePageRefresh,
+} from "./utils";
 
 const useCompanies = () => {
   const [state, setState] = useState({
@@ -35,29 +40,27 @@ const useCompanies = () => {
     path: `${COMPANY_PATH}/:id`,
     strict: true,
   });
+  const matchEmployees = useRouteMatch({
+    path: `${COMPANY_PATH}/:id/:employees`,
+    strict: true,
+  });
+  const matchSingleEmployee = useRouteMatch({
+    path: `${COMPANY_PATH}/:id/:employee/:employeeId`,
+    strict: true,
+  });
 
+  // handle page refresh
   useEffect(() => {
-    if (
-      matchCompany?.params?.id &&
-      matchCompany?.isExact &&
-      state &&
-      state.companies &&
-      state.companies.length &&
-      !state.selectedCompany
-    ) {
-      const selectedCompany = state.companies.find(
-        (company) => company._id === matchCompany.params.id
-      );
-      if (selectedCompany) {
-        setState((prevState) => ({
-          ...prevState,
-          selectedCompany: selectedCompany,
-        }));
-      } else {
-        history.push("/pageNotFound");
-      }
+    if (matchCompany && matchCompany?.isExact) {
+      onCompanyPageRefresh(state, setState, matchCompany, history);
     }
-  }, [matchCompany, state, history]);
+    if (matchEmployees && matchEmployees?.isExact) {
+      onEmployeesPageRefresh(state, setState, matchCompany, history);
+    }
+    if (matchSingleEmployee && matchSingleEmployee?.isExact) {
+      onSingleEmployeePageRefresh(state, setState, matchCompany, history);
+    }
+  }, [matchCompany, state, history, matchEmployees, matchSingleEmployee]);
 
   // general method to update state value
   const onChange = ({ name, value }) => {

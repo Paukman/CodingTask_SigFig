@@ -58,8 +58,6 @@ function App() {
               )}
             />
             <Route
-              exact
-              path="/pageNotFound"
               component={() => (
                 <WithHeader>
                   <div>Page not found</div>
