@@ -1,19 +1,14 @@
-export const onCompanyPageRefresh = (
-  state,
-  setState,
-  matchCompany,
-  history
-) => {
+export const onCompanyPageRefresh = (state, setState, match, history) => {
   if (
-    matchCompany?.params?.id &&
-    matchCompany?.isExact &&
+    match?.params?.id &&
+    match?.isExact &&
     state &&
     state.companies &&
     state.companies.length &&
     !state.selectedCompany
   ) {
     const selectedCompany = state.companies.find(
-      (company) => company._id === matchCompany.params.id
+      (company) => company._id === match.params.id
     );
     if (selectedCompany) {
       setState((prevState) => ({
@@ -26,5 +21,11 @@ export const onCompanyPageRefresh = (
   }
 };
 
-export const onEmployeesPageRefresh = () => {};
-export const onSingleEmployeePageRefresh = () => {};
+// TODO
+export const onEmployeesPageRefresh = (state, setState, match, history) => {};
+export const onSingleEmployeePageRefresh = (
+  state,
+  setState,
+  match,
+  history
+) => {};

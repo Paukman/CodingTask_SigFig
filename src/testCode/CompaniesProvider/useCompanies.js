@@ -51,15 +51,9 @@ const useCompanies = () => {
 
   // handle page refresh
   useEffect(() => {
-    if (matchCompany && matchCompany?.isExact) {
-      onCompanyPageRefresh(state, setState, matchCompany, history);
-    }
-    if (matchEmployees && matchEmployees?.isExact) {
-      onEmployeesPageRefresh(state, setState, matchCompany, history);
-    }
-    if (matchSingleEmployee && matchSingleEmployee?.isExact) {
-      onSingleEmployeePageRefresh(state, setState, matchCompany, history);
-    }
+    onCompanyPageRefresh(state, setState, matchCompany, history);
+    onEmployeesPageRefresh(state, setState, matchEmployees, history);
+    onSingleEmployeePageRefresh(state, setState, matchSingleEmployee, history);
   }, [matchCompany, state, history, matchEmployees, matchSingleEmployee]);
 
   // general method to update state value
@@ -77,6 +71,7 @@ const useCompanies = () => {
 
   const updateCompaniesAndEmployees = useCallback(
     ({ companies, allEmployees }) => {
+      console.log(allEmployees);
       companies.sort((a, b) => (a.name > b.name ? 1 : -1)); // sort
       onChange({ name: "companies", value: companies });
       onChange({ name: "allEmployees", value: allEmployees });
