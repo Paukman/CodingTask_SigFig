@@ -29,7 +29,7 @@
     "lint:fix": "eslint --fix .",
     "mongo": "mongod --dbpath data/db",
     "server": "cd server && node server.js",
-    "client": "react-scripts start"
+    "client": "PORT=3006 react-scripts start"
   },
   "eslintConfig": {
     "extends": [
